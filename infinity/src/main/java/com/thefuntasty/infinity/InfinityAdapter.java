@@ -34,6 +34,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private boolean footerVisible = false;
 	private boolean pullToRefresh = false;
 	private boolean startCalled = false;
+	private boolean initialContent = false;
 
 	private RecyclerView.OnScrollListener onScrollListener;
 	private RecyclerView recyclerView;
@@ -81,6 +82,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 * @param initialCollection reference to initial collection
 	 */
 	public void setInitialContent(AbstractList<T> initialCollection) {
+		initialContent = true;
 		content.clear();
 		content.addAll(initialCollection);
 		notifyDataSetChanged();
@@ -126,7 +128,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 	}
-
 
 	/**
 	 * Create ViewHolder for content item
@@ -209,7 +210,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				staggeredGridLayoutManager.findFirstVisibleItemPositions(positions);
 				int firstVisibleItem = findMin(positions);
 
-				if (!errorOccurred && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
 					requestNext();
 				}
@@ -227,7 +228,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				int visibleItemCount = recyclerView.getChildCount();
 				int totalItemCount = linearLayoutManager.getItemCount();
 
-				if (!errorOccurred && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
 					requestNext();
 				}
@@ -370,6 +371,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			content.addAll(data);
 		}
 
+		initialContent = false;
 		errorOccurred = false;
 		showFooter();
 		notifyItemRangeInserted(offset + getHeaderCount(), data.size());
