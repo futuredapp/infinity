@@ -1,10 +1,8 @@
 package com.thefuntasty.infinity.sample.runner;
 
 import android.os.Bundle;
-import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnitRunner;
 
-import com.thefuntasty.infinity.sample.util.RxIdlingExecutionHook;
 import com.thefuntasty.infinity.sample.util.RxIdlingResource;
 
 import rx.plugins.RxJavaPlugins;
@@ -19,10 +17,7 @@ public class RxAndroidJUnitRunner extends AndroidJUnitRunner {
 
 	@Override
 	public void onCreate(Bundle arguments) {
+		RxJavaPlugins.getInstance().registerObservableExecutionHook(RxIdlingResource.get());
 		super.onCreate(arguments);
-		RxIdlingResource rxIdlingResource = new RxIdlingResource();
-		RxJavaPlugins.getInstance()
-				.registerObservableExecutionHook(new RxIdlingExecutionHook(rxIdlingResource));
-		Espresso.registerIdlingResources(rxIdlingResource);
 	}
 }

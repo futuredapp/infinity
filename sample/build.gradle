@@ -26,6 +26,7 @@ final ESPRESSO_VERSION = '2.2.2'
 final JUNIT_VERSION = '4.12'
 final SUPPORT_LIBRARY_VERSION = '23.4.0'
 final RUNNER_VERSION = '0.5'
+final DEXMAKER_VERSION = '1.4'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -51,4 +52,7 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-intents:$ESPRESSO_VERSION"
     androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
     androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
+    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 }

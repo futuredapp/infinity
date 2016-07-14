@@ -26,19 +26,19 @@ public class TestActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
 
-		final SampleUserAdapter adapter = App.getConfig().getAdapter();
+		final SampleUserAdapter adapter = App.get().getConfig().getAdapter();
 		refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override public void onRefresh() {
 				adapter.restart(true);
 			}
 		});
-		recyclerView.setLayoutManager(App.getConfig().getLayoutManager());
+		recyclerView.setLayoutManager(App.get().getConfig().getLayoutManager());
 		recyclerView.setAdapter(adapter);
 
 		adapter.setLimit(10);
 		adapter.setFiller(new InfinityFiller<User>() {
 			@Override public void onLoad(final int limit, final int offset, final InfinityFiller.Callback<User> callback) {
-				App.getConfig().getDataObservable(limit, offset)
+				App.get().getConfig().getDataObservable(limit, offset)
 						.subscribe(new Action1<List<User>>() {
 							@Override public void call(List<User> users) {
 								callback.onData(users);
@@ -50,7 +50,7 @@ public class TestActivity extends AppCompatActivity {
 						});
 			}
 		});
-		adapter.setEventListener(App.getConfig().getEventListener(refresh));
+		adapter.setEventListener(App.get().getConfig().getEventListener(refresh));
 		adapter.start();
 	}
 
