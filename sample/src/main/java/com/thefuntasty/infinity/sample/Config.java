@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.thefuntasty.infinity.InfinityAdapter;
 import com.thefuntasty.infinity.InfinityEventListener;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Config {
 
 	Context context;
 
-	SampleUserAdapter adapter;
+	InfinityAdapter adapter;
 	RecyclerView.LayoutManager layoutManager;
 	InfinityEventListener eventListener;
 	int limit = 10;
@@ -29,12 +30,12 @@ public class Config {
 		this.context = context;
 	}
 
-	public SampleUserAdapter getAdapter() {
+	public InfinityAdapter getAdapter() {
 		if (adapter == null) {
-			return new SampleUserAdapter();
-		} else {
-			return adapter;
+			adapter = new SampleUserAdapter();
 		}
+
+		return adapter;
 	}
 
 	public RecyclerView.LayoutManager getLayoutManager() {
@@ -47,20 +48,21 @@ public class Config {
 	public Observable<List<User>> getDataObservable(final int limit, final int offset) {
 		Observable<User> observable = Observable.from(getData());
 
-		if (offset == 30) {
+		if (offset == 20) {
 			return Observable.just(Collections.<User>emptyList())
 					.delay(2, TimeUnit.SECONDS)
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribeOn(Schedulers.io());
 		} else if (offset != 0) { // next part
 			return observable
+					.skip(10)
 					.take(limit)
 					.buffer(limit)
 					.delay(2, TimeUnit.SECONDS)
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribeOn(Schedulers.io());
 		} else { // first part
-			return observable.skip(10)
+			return observable
 					.take(limit)
 					.buffer(limit)
 					.delay(2, TimeUnit.SECONDS)

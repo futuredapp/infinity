@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.thefuntasty.infinity.InfinityAdapter;
 
-public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.ViewHolder> {
+public class SampleTestUserAdapter extends InfinityAdapter<User, SampleTestUserAdapter.ViewHolder> {
 
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
@@ -41,7 +41,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override public int getHeaderCount() {
-		return 2;
+		return 3;
 	}
 
 	@Override public int getHeaderItemViewType(int position) {
@@ -54,7 +54,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override
-	public void onBindContentViewHolder(SampleUserAdapter.ViewHolder holder, int position) {
+	public void onBindContentViewHolder(SampleTestUserAdapter.ViewHolder holder, int position) {
 		((TextView) holder.itemView).setText(getItem(position).toString());
 	}
 

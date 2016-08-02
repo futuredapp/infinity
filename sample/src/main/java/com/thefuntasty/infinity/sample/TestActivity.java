@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
+import com.thefuntasty.infinity.InfinityAdapter;
 import com.thefuntasty.infinity.InfinityFiller;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class TestActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
 
-		final SampleUserAdapter adapter = App.get().getConfig().getAdapter();
+		final InfinityAdapter<User, ?> adapter = App.get().getConfig().getAdapter();
 		refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override public void onRefresh() {
 				adapter.restart(true);
