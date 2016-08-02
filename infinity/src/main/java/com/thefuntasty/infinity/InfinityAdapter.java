@@ -62,7 +62,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	@Override public final int getItemCount() {
-		return getHeaderCount() + content.size() + (footerVisible ? 1 : 0);
+		return getHeaderCount() + (content != null ? content.size() : 0) + (footerVisible ? 1 : 0);
 	}
 
 
