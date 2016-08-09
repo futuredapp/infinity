@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +81,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 *
 	 * @param initialCollection reference to initial collection
 	 */
-	public void setInitialContent(AbstractList<T> initialCollection) {
+	public void setInitialContent(List<T> initialCollection) {
 		initialContent = true;
 		content.clear();
 		content.addAll(initialCollection);
