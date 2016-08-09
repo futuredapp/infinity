@@ -3,6 +3,7 @@ package com.thefuntasty.infinity;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -189,9 +190,12 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	@Override
 	public void onAttachedToRecyclerView(RecyclerView recyclerView) {
 		this.recyclerView = recyclerView;
-		if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+		RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+		if (layoutManager instanceof GridLayoutManager) {
+			onAttachedGridLayoutManager(recyclerView);
+		} else if (layoutManager instanceof LinearLayoutManager) {
 			onAttachedLinearLayoutManager(recyclerView);
-		} else if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+		} else if (layoutManager instanceof StaggeredGridLayoutManager) {
 			onAttachedStaggeredGridManager(recyclerView);
 		}
 	}
@@ -209,6 +213,29 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				int lastVisibleItem = findMax(positions);
 				staggeredGridLayoutManager.findFirstVisibleItemPositions(positions);
 				int firstVisibleItem = findMin(positions);
+
+				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+					footerVisible = true;
+					requestNext();
+				}
+			}
+		};
+		recyclerView.addOnScrollListener(onScrollListener);
+	}
+
+	private void onAttachedGridLayoutManager(final RecyclerView recyclerView) {
+		final GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+		gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+			@Override public int getSpanSize(int position) {
+				return getItemViewType(position) == FOOTER ? gridLayoutManager.getSpanCount() : 1;
+			}
+		});
+		onScrollListener = new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				int firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition();
+				int visibleItemCount = recyclerView.getChildCount();
+				int totalItemCount = gridLayoutManager.getItemCount();
 
 				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
