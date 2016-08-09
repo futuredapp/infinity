@@ -320,7 +320,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 *
 	 * @param visibleThreshold threshold size. Default value = 5
 	 */
-	private void setVisibleThreshold(int visibleThreshold) {
+	public void setVisibleThreshold(int visibleThreshold) {
 		this.visibleThreshold = visibleThreshold;
 	}
 
