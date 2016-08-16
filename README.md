@@ -5,7 +5,7 @@
 
 ```
 dependencies {
-	compile 'com.github.thefuntasty:infinity:0.0.4'
+	compile 'com.github.thefuntasty:infinity:0.0.5'
 }
 ```
 
