@@ -286,6 +286,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		offset = 0;
 
 		setLoading(InfinityConstant.FIRST_PAGE);
+		onPreLoad(InfinityConstant.FIRST_PAGE);
 		refreshFooter();
 		filler.resetCallbacks(getFirstPageCallback(), getNextPageCallback());
 		filler.onLoad(limit, offset, filler.getFirstPageCallback());
@@ -293,6 +294,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void requestNext() {
 		setLoading(InfinityConstant.NEXT_PAGE);
+		onPreLoad(InfinityConstant.NEXT_PAGE);
 		showFooter();
 		filler.onLoad(limit, offset, filler.getNextPageCallback());
 	}
@@ -308,8 +310,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
 					errorOccurred = true;
+					setIdle();
 					onFirstUnavailable(error, pullToRefresh);
-					setIdle(InfinityConstant.FIRST_PAGE, error);
 					showFooter();
 				}
 			}
@@ -327,8 +329,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
 					errorOccurred = true;
+					setIdle();
 					onNextUnavailable(error);
-					setIdle(InfinityConstant.NEXT_PAGE, error);
 					showFooter();
 				}
 			}
@@ -423,11 +425,12 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			onFirstEmpty(pullToRefresh);
 		} else {
 			if (data.size() < limit) {
-				setIdle(part, null);
+				setIdle();
+				onLoad(part);
 				setFinished();
 			} else {
-				onLoad(part, null);
-				loadingStatus = InfinityConstant.IDLE;
+				setIdle();
+				onLoad(part);
 
 				// notify scroller about possibility loading next parts
 				onScrollListener.onScrolled(recyclerView, recyclerView.getScrollX(), recyclerView.getScrollY());
@@ -450,26 +453,20 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
-	private void setIdle(@InfinityConstant.Part int part, Throwable error) {
+	private void setIdle() {
 		loadingStatus = InfinityConstant.IDLE;
-		onLoad(part, error);
 	}
 
-	private void onLoad(@InfinityConstant.Part int part, Throwable error) {
+	private void onLoad(@InfinityConstant.Part int part) {
 		if (part == InfinityConstant.FIRST_PAGE) {
 			onFirstLoaded(pullToRefresh);
 		} else {
-			if (error != null) {
-				onNextUnavailable(error);
-			} else {
-				onNextLoaded();
-			}
+			onNextLoaded();
 		}
 	}
 
 	private void setLoading(@InfinityConstant.Part int part) {
 		loadingStatus = InfinityConstant.LOADING;
-		onPreLoad(part);
 	}
 
 	private void onPreLoad(@InfinityConstant.Part int part) {
