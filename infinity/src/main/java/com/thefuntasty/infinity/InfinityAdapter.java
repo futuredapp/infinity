@@ -61,8 +61,22 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
+	/**
+	 * Return total item count in adapter including headers and loading/refresh footer
+	 *
+	 * @return number of items in adapter
+	 */
 	@Override public final int getItemCount() {
 		return getHeaderCount() + (content != null ? content.size() : 0) + (footerVisible ? 1 : 0);
+	}
+
+	/**
+	 * Returns content (!) items count. Do not include headers and loading/refresh footer
+	 *
+	 * @return number of content items
+	 */
+	public final int getContentItemCount() {
+		return content.size();
 	}
 
 
