@@ -1,4 +1,4 @@
-package com.thefuntasty.infinity.sample;
+package com.thefuntasty.infinity.test;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thefuntasty.infinity.InfinityAdapter;
+
 
 public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.ViewHolder> {
 
@@ -37,7 +38,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText("I'm header" + position);
+		((TextView) holder.itemView).setText("Im header" + position);
 	}
 
 	@Override public int getHeaderCount() {

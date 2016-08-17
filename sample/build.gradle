@@ -21,12 +21,7 @@ android {
     }
 }
 
-final MOCKITO_VERSION = '1.10.19'
-final ESPRESSO_VERSION = '2.2.2'
-final JUNIT_VERSION = '4.12'
 final SUPPORT_LIBRARY_VERSION = '23.4.0'
-final RUNNER_VERSION = '0.5'
-final DEXMAKER_VERSION = '1.4'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,22 +32,4 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.8'
     compile 'com.jakewharton.timber:timber:4.1.2'
-
-    androidTestCompile "junit:junit:$JUNIT_VERSION"
-    androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
-    androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'recyclerview-v7'
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-    }
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:$ESPRESSO_VERSION"
-    androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
-    androidTestCompile "com.android.support.test:rules:$RUNNER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
-    androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
 }

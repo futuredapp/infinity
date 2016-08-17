@@ -1,7 +1,13 @@
 package com.thefuntasty.infinity.sample;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class DataManager {
 
@@ -17,7 +23,7 @@ public class DataManager {
 		return dataManager;
 	}
 
-	public List<User> getData() {
+	private List<User> getData() {
 		final ArrayList<User> data = new ArrayList<>(20);
 		data.add(new User("Alice", "0"));
 		data.add(new User("Bruno", "1"));
@@ -41,5 +47,31 @@ public class DataManager {
 		data.add(new User("Tomáš", "19"));
 
 		return data;
+	}
+
+	public Observable<List<User>> getDataObservable(final int limit, final int offset) {
+		Observable<User> observable = Observable.from(getData());
+
+		if (offset == 20) {
+			return Observable.just(Collections.<User>emptyList())
+					.delay(2, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribeOn(Schedulers.io());
+		} else if (offset != 0) { // next part
+			return observable
+					.skip(10)
+					.take(limit)
+					.buffer(limit)
+					.delay(2, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribeOn(Schedulers.io());
+		} else { // first part
+			return observable
+					.take(limit)
+					.buffer(limit)
+					.delay(2, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribeOn(Schedulers.io());
+		}
 	}
 }

@@ -1,1 +1,1 @@
-include ':sample', ':infinity'
+include ':sample', ':infinity', ':test'
