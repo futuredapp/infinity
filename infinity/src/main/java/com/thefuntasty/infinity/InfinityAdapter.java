@@ -61,6 +61,21 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
+	@Override public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+		int viewType = getItemViewType(position);
+		if (viewType > HEADER_VIEW_TYPE_OFFSET) {
+			onBindHeaderViewHolder(holder, position);
+		} else if (viewType == FOOTER) {
+			onBindFooterViewHolder(holder);
+		} else {
+			if (payloads.isEmpty()) {
+				onBindContentViewHolder(holder, position);
+			} else {
+				onBindContentViewHolder(holder, position, payloads);
+			}
+		}
+	}
+
 	/**
 	 * Return total item count in adapter including headers and loading/refresh footer
 	 *
@@ -158,6 +173,17 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 * @param position header's position
 	 */
 	public abstract void onBindContentViewHolder(VH holder, int position);
+
+	/**
+	 * Bind content with provided ViewHolder at specified position
+	 *
+	 * @param holder   header's view holder
+	 * @param position header's position
+	 * @param payloads custom update payloads
+	 */
+	public void onBindContentViewHolder(VH holder, int position, List<Object> payloads) {
+		onBindContentViewHolder(holder, position);
+	}
 
 	/**
 	 * Gets item view type at specified position. Must not be negative value. Must not collide with
