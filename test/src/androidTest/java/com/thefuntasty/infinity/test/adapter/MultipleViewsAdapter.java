@@ -1,4 +1,4 @@
-package com.thefuntasty.infinity.test;
+package com.thefuntasty.infinity.test.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thefuntasty.infinity.InfinityAdapter;
+import com.thefuntasty.infinity.test.R;
+import com.thefuntasty.infinity.test.User;
 
-public class SampleTestUserAdapter extends InfinityAdapter<User, SampleTestUserAdapter.ViewHolder> {
+public class MultipleViewsAdapter extends InfinityAdapter<User, MultipleViewsAdapter.ViewHolder> {
 
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
@@ -26,36 +28,13 @@ public class SampleTestUserAdapter extends InfinityAdapter<User, SampleTestUserA
 		}
 	}
 
-	@Override public ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-		if (viewType == 50) {
-			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_1, parent, false);
-			return new ViewHolder(view);
-		} else {
-			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_2, parent, false);
-			return new ViewHolder(view);
-		}
-	}
-
-	@Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText("Im header" + position);
-	}
-
-	@Override public int getHeaderCount() {
-		return 3;
-	}
-
-	@Override public int getHeaderItemViewType(int position) {
-		if (position == 0) {
-			return 50;
-		} else {
-			return 51;
-		}
-
-	}
-
 	@Override
-	public void onBindContentViewHolder(SampleTestUserAdapter.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText(getItem(position).toString());
+	public void onBindContentViewHolder(MultipleViewsAdapter.ViewHolder holder, int position) {
+		if (getContentItemViewType(position) == LEFT) {
+			((TextView) holder.itemView).setText(getItem(position).toString() + "L");
+		} else {
+			((TextView) holder.itemView).setText(getItem(position).toString() + "R");
+		}
 	}
 
 	@Override
