@@ -266,7 +266,12 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		final GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
 		gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 			@Override public int getSpanSize(int position) {
-				return getItemViewType(position) == FOOTER ? gridLayoutManager.getSpanCount() : 1;
+				int viewType = getItemViewType(position);
+				if (viewType > HEADER_VIEW_TYPE_OFFSET || viewType == FOOTER) {
+					return gridLayoutManager.getSpanCount();
+				} else {
+					return 1;
+				}
 			}
 		});
 		onScrollListener = new RecyclerView.OnScrollListener() {
