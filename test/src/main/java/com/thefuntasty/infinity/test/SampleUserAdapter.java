@@ -56,7 +56,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 
 	@Override
 	public void onBindContentViewHolder(SampleUserAdapter.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText(getItem(position).toString());
+		((TextView) holder.itemView).setText(getContentItem(position).toString());
 	}
 
 	@Override

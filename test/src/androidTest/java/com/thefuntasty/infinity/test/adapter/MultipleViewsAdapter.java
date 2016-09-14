@@ -31,9 +31,9 @@ public class MultipleViewsAdapter extends InfinityAdapter<User, MultipleViewsAda
 	@Override
 	public void onBindContentViewHolder(MultipleViewsAdapter.ViewHolder holder, int position) {
 		if (getContentItemViewType(position) == LEFT) {
-			((TextView) holder.itemView).setText(getItem(position).toString() + "L");
+			((TextView) holder.itemView).setText(getContentItem(position).toString() + "L");
 		} else {
-			((TextView) holder.itemView).setText(getItem(position).toString() + "R");
+			((TextView) holder.itemView).setText(getContentItem(position).toString() + "R");
 		}
 	}
 

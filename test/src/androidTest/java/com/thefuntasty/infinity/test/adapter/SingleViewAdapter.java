@@ -20,7 +20,7 @@ public class SingleViewAdapter extends InfinityAdapter<User, SingleViewAdapter.V
 
 	@Override
 	public void onBindContentViewHolder(SingleViewAdapter.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText(getItem(position).toString());
+		((TextView) holder.itemView).setText(getContentItem(position).toString());
 	}
 
 	@Override

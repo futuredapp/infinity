@@ -431,8 +431,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 * @param position index of returned item
 	 * @return content item
 	 */
-	public T getItem(int position) {
-		return content.get(position - getHeaderCount());
+	public T getContentItem(int position) {
+		return content.get(position);
 	}
 
 	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {

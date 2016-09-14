@@ -57,7 +57,7 @@ public class MultipleViewsMultipleHeadersAdapter extends InfinityAdapter<User, M
 
 	@Override
 	public void onBindContentViewHolder(MultipleViewsMultipleHeadersAdapter.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText(getItem(position).toString());
+		((TextView) holder.itemView).setText(getContentItem(position).toString());
 	}
 
 	@Override
