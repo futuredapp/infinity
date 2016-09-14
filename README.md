@@ -69,34 +69,34 @@ Tiny library with ability to provide support for infinite paginated scrolling in
 Simply override method `getFooterLayout()` in your adapter and return XML layout resource what contains 2 views with id's `@+id/loading` and `@+id/try_again`.
 
 1. `footer_layout.xml`
-```xml
-<LinearLayout
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-
+	```xml
 	<LinearLayout
-		android:id="@+id/loading"
-		android:layout_width="...">
-
-		<!-- content -->
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+	
+		<LinearLayout
+			android:id="@+id/loading"
+			android:layout_width="...">
+	
+			<!-- content -->
+		</LinearLayout>
+	
+		<LinearLayout
+			android:id="@+id/try_again"
+			android:layout_width="...">
+	
+			<!-- content -->
+		</LinearLayout>
 	</LinearLayout>
-
-	<LinearLayout
-		android:id="@+id/try_again"
-		android:layout_width="...">
-
-		<!-- content -->
-	</LinearLayout>
-</LinearLayout>
-```
+	```
 
 2. Adapter class
-```java
-	@Override
-	public int getFooterLayout() {
-		return R.layout.footer_layout;
-	}
-```
+	```java
+		@Override
+		public int getFooterLayout() {
+			return R.layout.footer_layout;
+		}
+	```
 
 ### Event listener
 
