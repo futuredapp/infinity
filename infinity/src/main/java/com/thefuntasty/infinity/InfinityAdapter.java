@@ -368,6 +368,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		};
 	}
 
+	public boolean isStarted() {
+		return startCalled;
+	}
+
 	public void start() {
 		if (!startCalled) {
 			requestFirst();
