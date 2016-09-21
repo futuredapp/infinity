@@ -57,7 +57,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		} else if (viewType == FOOTER) {
 			onBindFooterViewHolder(holder);
 		} else {
-			onBindContentViewHolder(holder, position);
+			onBindContentViewHolder(holder, position - getHeaderCount());
 		}
 	}
 
@@ -69,9 +69,9 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			onBindFooterViewHolder(holder);
 		} else {
 			if (payloads.isEmpty()) {
-				onBindContentViewHolder(holder, position);
+				onBindContentViewHolder(holder, position - getHeaderCount());
 			} else {
-				onBindContentViewHolder(holder, position, payloads);
+				onBindContentViewHolder(holder, position - getHeaderCount(), payloads);
 			}
 		}
 	}
@@ -93,7 +93,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	public final int getContentItemCount() {
 		return content.size();
 	}
-
 
 	@Override public final int getItemViewType(int position) {
 		if (position < getHeaderCount()) {
