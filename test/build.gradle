@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.thefuntasty.infinity.test"
@@ -33,8 +33,8 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
     compile project(":infinity")
     compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.2.0'
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'io.reactivex:rxjava:1.2.1'
+    compile 'com.jakewharton.timber:timber:4.3.1'
 
     androidTestCompile "junit:junit:$JUNIT_VERSION"
     androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
