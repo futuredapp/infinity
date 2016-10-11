@@ -64,7 +64,11 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	@Override public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
 		int viewType = getItemViewType(position);
 		if (viewType > HEADER_VIEW_TYPE_OFFSET) {
-			onBindHeaderViewHolder(holder, position);
+			if (payloads.isEmpty()) {
+				onBindHeaderViewHolder(holder, position);
+			} else {
+				onBindHeaderViewHolder(holder, position, payloads);
+			}
 		} else if (viewType == FOOTER) {
 			onBindFooterViewHolder(holder);
 		} else {
@@ -121,7 +125,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 *
 	 * @return number of headers
 	 */
-
 	public int getHeaderCount() {
 		return 0;
 	}
@@ -155,6 +158,17 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 */
 	public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+	}
+
+	/**
+	 * Bind header with provided ViewHolder at specified position
+	 *
+	 * @param holder   header's view holder
+	 * @param position header's position
+	 * @param payloads custom update payloads
+	 */
+	public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+		onBindHeaderViewHolder(holder, position);
 	}
 
 	/**
