@@ -4,5 +4,8 @@
 	android:id="@+id/text"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:textColor="@android:color/white"
+	android:gravity="center"
+	android:textSize="15sp"
 	android:background="@android:color/holo_purple"
-	android:paddingBottom="40dp"/>
+	android:padding="10dp"/>

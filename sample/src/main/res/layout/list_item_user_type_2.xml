@@ -5,4 +5,5 @@
 	android:gravity="right"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:paddingBottom="40dp"/>
+	android:background="@android:color/holo_orange_light"
+	android:padding="10dp"/>
