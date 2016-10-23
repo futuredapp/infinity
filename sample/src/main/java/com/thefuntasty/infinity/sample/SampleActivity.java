@@ -39,7 +39,6 @@ public class SampleActivity extends AppCompatActivity {
 		adapter.setLimit(10);
 		adapter.setFiller(new InfinityFiller<User>() {
 			@Override public void onLoad(final int limit, final int offset, final InfinityFiller.Callback<User> callback) {
-
 				DataManager.get().getDataObservable(limit, offset)
 						.subscribe(new Action1<List<User>>() {
 							@Override public void call(List<User> users) {
@@ -53,7 +52,6 @@ public class SampleActivity extends AppCompatActivity {
 			}
 		});
 		adapter.setEventListener(new InfinityEventListener() {
-
 			@Override public void onFirstLoaded(boolean pullToRefresh) {
 				super.onFirstLoaded(pullToRefresh);
 			}
