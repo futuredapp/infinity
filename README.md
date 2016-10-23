@@ -23,7 +23,7 @@ Tiny library with ability to provide support for infinite paginated scrolling in
 
 		@Override
 		public void onBindContentViewHolder(ViewHolder holder, int position) {
-			((TextView) holder.itemView).setText(getItem(position).toString());
+			((TextView) holder.itemView).setText(getContentItem(position).toString());
 		}
 
 		public class ViewHolder extends RecyclerView.ViewHolder {
