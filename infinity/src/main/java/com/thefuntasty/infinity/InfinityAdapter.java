@@ -269,7 +269,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
-					requestNext();
+					requestNextPostponed(recyclerView);
 				}
 			}
 		};
@@ -297,7 +297,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
-					requestNext();
+					requestNextPostponed(recyclerView);
 				}
 			}
 		};
@@ -315,11 +315,19 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
-					requestNext();
+					requestNextPostponed(recyclerView);
 				}
 			}
 		};
 		recyclerView.addOnScrollListener(onScrollListener);
+	}
+
+	private void requestNextPostponed(RecyclerView recyclerView) {
+		recyclerView.post(new Runnable() {
+			@Override public void run() {
+				requestNext();
+			}
+		});
 	}
 
 	@Override
