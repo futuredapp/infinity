@@ -508,6 +508,13 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
+	private void removeFooter() {
+		if (footerVisible) {
+			footerVisible = false;
+			notifyItemRemoved(getItemCount());
+		}
+	}
+
 	private void setIdle() {
 		loadingStatus = InfinityConstant.IDLE;
 	}
@@ -535,11 +542,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private void setFinished() {
 		loadingStatus = InfinityConstant.FINISHED;
 		onFinished();
-
-		if (footerVisible) {
-			footerVisible = false;
-			notifyItemRemoved(getItemCount());
-		}
+		removeFooter();
 	}
 
 	private void tryAgain() {
