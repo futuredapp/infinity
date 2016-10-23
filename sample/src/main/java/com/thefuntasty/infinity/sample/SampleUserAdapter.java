@@ -10,8 +10,11 @@ import com.thefuntasty.infinity.InfinityAdapter;
 
 public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.ViewHolder> {
 
-	public static final int LEFT = 0;
-	public static final int RIGHT = 1;
+	private static final int LEFT = 0;
+	private static final int RIGHT = 1;
+
+	private static final int HEADER_PURPLE = 50;
+	private static final int HEADER_RED = 51;
 
 	@Override
 	public ViewHolder onCreateContentViewHolder(ViewGroup parent, int viewType) {
@@ -27,12 +30,14 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override public ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-		if (viewType == 50) {
+		if (viewType == HEADER_PURPLE) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_1, parent, false);
 			return new ViewHolder(view);
-		} else {
+		} else if (viewType == HEADER_RED) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_2, parent, false);
 			return new ViewHolder(view);
+		} else {
+			throw new IllegalStateException("Unknown header viewType: " + String.valueOf(viewType));
 		}
 	}
 
@@ -46,9 +51,9 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 
 	@Override public int getHeaderItemViewType(int position) {
 		if (position == 0) {
-			return 50;
+			return HEADER_PURPLE;
 		} else {
-			return 51;
+			return HEADER_RED;
 		}
 
 	}
@@ -68,8 +73,8 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 		return position % 2 == 0 ? LEFT : RIGHT;
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder {
-		public ViewHolder(View itemView) {
+	class ViewHolder extends RecyclerView.ViewHolder {
+		ViewHolder(View itemView) {
 			super(itemView);
 		}
 	}
