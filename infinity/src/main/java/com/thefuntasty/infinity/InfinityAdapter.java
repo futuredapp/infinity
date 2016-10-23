@@ -340,7 +340,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		setLoading(InfinityConstant.FIRST_PAGE);
 		onPreLoad(InfinityConstant.FIRST_PAGE);
-		refreshFooter();
+		showFooter();
 		filler.resetCallbacks(getFirstPageCallback(), getNextPageCallback());
 		filler.onLoad(limit, offset, filler.getFirstPageCallback());
 	}
