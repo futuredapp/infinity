@@ -53,36 +53,26 @@ public class SampleActivity extends AppCompatActivity {
 		});
 		adapter.setEventListener(new InfinityEventListener() {
 			@Override public void onFirstLoaded(boolean pullToRefresh) {
-				super.onFirstLoaded(pullToRefresh);
+				refresh.setRefreshing(false);
 			}
 
 			@Override public void onFirstUnavailable(Throwable error, boolean pullToRefresh) {
-				super.onFirstUnavailable(error, pullToRefresh);
+				refresh.setRefreshing(false);
 			}
 
 			@Override public void onFirstEmpty(boolean pullToRefresh) {
-				super.onFirstEmpty(pullToRefresh);
+				refresh.setRefreshing(false);
 			}
 
-			@Override public void onNextLoaded() {
-				super.onNextLoaded();
-			}
+			@Override public void onNextLoaded() { }
 
-			@Override public void onNextUnavailable(Throwable error) {
-				super.onNextUnavailable(error);
-			}
+			@Override public void onNextUnavailable(Throwable error) { }
 
-			@Override public void onFinished() {
-				super.onFinished();
-			}
+			@Override public void onFinished() { }
 
-			@Override public void onPreLoadFirst(boolean pullToRefresh) {
-				super.onPreLoadFirst(pullToRefresh);
-			}
+			@Override public void onPreLoadFirst(boolean pullToRefresh) { }
 
-			@Override public void onPreLoadNext() {
-				super.onPreLoadNext();
-			}
+			@Override public void onPreLoadNext() { }
 		});
 		adapter.start();
 	}
