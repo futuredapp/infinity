@@ -469,18 +469,16 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		offset += data.size();
 
-		if (part == InfinityConstant.FIRST_PAGE && data.size() == 0) {
+		if (part == InfinityConstant.FIRST_PAGE && data.size() == 0) { // no data
 			loadingStatus = InfinityConstant.IDLE;
 			onFirstEmpty(pullToRefresh);
-		} else {
+		} else { // we have some data
+			setIdle();
+			onLoad(part);
+
 			if (data.size() < limit) {
-				setIdle();
-				onLoad(part);
 				setFinished();
 			} else {
-				setIdle();
-				onLoad(part);
-
 				// notify scroller about possibility loading next parts
 				onScrollListener.onScrolled(recyclerView, recyclerView.getScrollX(), recyclerView.getScrollY());
 			}
@@ -550,42 +548,49 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
+	@Override
 	public final void onPreLoadNext() {
 		if (eventListener != null) {
 			eventListener.onPreLoadNext();
 		}
 	}
 
+	@Override
 	public final void onFirstLoaded(boolean pullToRefresh) {
 		if (eventListener != null) {
 			eventListener.onFirstLoaded(pullToRefresh);
 		}
 	}
 
+	@Override
 	public final void onNextLoaded() {
 		if (eventListener != null) {
 			eventListener.onNextLoaded();
 		}
 	}
 
+	@Override
 	public final void onFirstUnavailable(Throwable error, boolean pullToRefresh) {
 		if (eventListener != null) {
 			eventListener.onFirstUnavailable(error, pullToRefresh);
 		}
 	}
 
+	@Override
 	public final void onFirstEmpty(boolean pullToRefresh) {
 		if (eventListener != null) {
 			eventListener.onFirstEmpty(pullToRefresh);
 		}
 	}
 
+	@Override
 	public final void onNextUnavailable(Throwable error) {
 		if (eventListener != null) {
 			eventListener.onNextUnavailable(error);
 		}
 	}
 
+	@Override
 	public final void onFinished() {
 		if (eventListener != null) {
 			eventListener.onFinished();
