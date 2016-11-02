@@ -4,14 +4,14 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-24.0.2
+    - build-tools-24.0.3
     - android-24
 
 branches:
   only:
   - master
 
-before_script:
+before-script:
   - chmod +x gradlew
 
 install:
