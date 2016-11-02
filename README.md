@@ -3,6 +3,7 @@
 Tiny library with ability to provide support for infinite paginated scrolling in `RecyclerView`. It is able to show loading & try again layout at the bottom of the list.
 
 [![](https://jitpack.io/v/thefuntasty/infinity.svg)](https://jitpack.io/#thefuntasty/infinity)
+<img src="https://travis-ci.org/thefuntasty/infinity.svg?branch=master">
 <p align="center"><img src="https://github.com/thefuntasty/infinity/blob/master/images/infinity.gif?raw=true" height="426" width="240"></p>
 
 # Usage
