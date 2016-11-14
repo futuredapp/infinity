@@ -461,6 +461,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		return content.get(position);
 	}
 
+	public List<T> getContentItems() {
+		return content;
+	}
+
 	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
 		if (part == InfinityConstant.FIRST_PAGE) {
 			content.clear();
