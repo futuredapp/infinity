@@ -36,6 +36,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private boolean pullToRefresh = false;
 	private boolean startCalled = false;
 	private boolean initialContent = false;
+	private boolean isRestarted = false;
 
 	private RecyclerView.OnScrollListener onScrollListener;
 	private RecyclerView recyclerView;
@@ -356,6 +357,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		return new InfinityFiller.Callback<T>() {
 			@Override public void onData(List<T> list) {
 				if (!interrupted) {
+					if (isRestarted) {
+						content.clear();
+						notifyDataSetChanged();
+					}
 					addDataAndResolveState(list, InfinityConstant.FIRST_PAGE);
 				}
 			}
@@ -410,6 +415,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	public void restart(boolean pullToRefresh) {
 		footerVisible = false;
 		this.pullToRefresh = pullToRefresh;
+		this.isRestarted = true;
 		requestFirst();
 	}
 
@@ -461,18 +467,34 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		return content.get(position);
 	}
 
+	/**
+	 * Get all content items
+	 *
+	 * @return list of current content items
+	 */
 	public List<T> getContentItems() {
 		return content;
 	}
 
-	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
-		if (part == InfinityConstant.FIRST_PAGE) {
-			content.clear();
-			notifyDataSetChanged();
-			content.addAll(data);
+	/**
+	 * Add item to content at specific position. If restart is called, item is removed with rest of content.
+	 *
+	 * @param pos  position where item will be added. If position is bigger than content size, item will be added to last position.
+	 * @param item item which will be added to the content
+	 */
+	public void addItem(int pos, T item) {
+		if (pos >= content.size()) {
+			content.add(item);
+			notifyItemInserted(content.size() - 1);
 		} else {
-			content.addAll(data);
+			content.add(pos, item);
+			notifyItemInserted(pos);
 		}
+		offset += 1;
+	}
+
+	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
+		content.addAll(data);
 
 		initialContent = false;
 		errorOccurred = false;
