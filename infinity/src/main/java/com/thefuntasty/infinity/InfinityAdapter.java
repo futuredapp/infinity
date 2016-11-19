@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"UnusedParameters", "unused"})
@@ -159,7 +158,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 * @param position header's position
 	 */
 	public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-		onBindHeaderViewHolder(holder, position, Collections.emptyList());
+
 	}
 
 	/**
