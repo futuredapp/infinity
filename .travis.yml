@@ -28,7 +28,7 @@ install:
     - true
 
 script:
-  - TERM=dumb ./gradlew :infinity:assembleDebug -Dpre-dex=false checkConnected
+  - TERM=dumb ./gradlew :infinity:assembleDebug -Dpre-dex=false connectedCheck
 
 after_failure: 
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
