@@ -484,10 +484,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	public void addItem(int pos, T item) {
 		if (pos >= content.size()) {
 			content.add(item);
-			notifyItemInserted(content.size() - 1);
+			notifyItemInserted(getHeaderCount() + content.size() - 1);
 		} else {
 			content.add(pos, item);
-			notifyItemInserted(pos);
+			notifyItemInserted(getHeaderCount() + pos);
 		}
 		offset += 1;
 	}
