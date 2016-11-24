@@ -173,6 +173,13 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	/**
+	 * Provides FooterViewHolder after onBind action
+	 *
+	 * @param footerViewHolder footer's view holder
+	 */
+	protected void onUpdateFooterViewHolder(FooterViewHolder footerViewHolder) { }
+
+	/**
 	 * Create ViewHolder for content item
 	 *
 	 * @param parent ViewHolder's parent
@@ -226,18 +233,26 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void onBindFooterViewHolder(RecyclerView.ViewHolder holder) {
 		if (holder instanceof FooterViewHolder) {
-			if (errorOccurred) {
-				((FooterViewHolder) holder).loading.setVisibility(View.GONE);
-				((FooterViewHolder) holder).tryAgain.setVisibility(View.VISIBLE);
-			} else {
-				((FooterViewHolder) holder).tryAgain.setVisibility(View.GONE);
-				((FooterViewHolder) holder).loading.setVisibility(View.VISIBLE);
-			}
-			if (recyclerView != null && recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
-				StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-				layoutParams.setFullSpan(true);
-			}
+			FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+			onBindFooterViewHolder(footerViewHolder);
 		}
+	}
+
+	private void onBindFooterViewHolder(FooterViewHolder footerViewHolder) {
+		if (errorOccurred) {
+			footerViewHolder.loading.setVisibility(View.GONE);
+			footerViewHolder.tryAgain.setVisibility(View.VISIBLE);
+		} else {
+			footerViewHolder.tryAgain.setVisibility(View.GONE);
+			footerViewHolder.loading.setVisibility(View.VISIBLE);
+		}
+		if (recyclerView != null && recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+			StaggeredGridLayoutManager.LayoutParams layoutParams =
+					(StaggeredGridLayoutManager.LayoutParams) footerViewHolder.itemView.getLayoutParams();
+			layoutParams.setFullSpan(true);
+		}
+
+		onUpdateFooterViewHolder(footerViewHolder);
 	}
 
 	@Override
