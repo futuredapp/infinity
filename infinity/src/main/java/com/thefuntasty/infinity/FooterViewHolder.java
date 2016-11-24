@@ -3,7 +3,7 @@ package com.thefuntasty.infinity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-final class FooterViewHolder extends RecyclerView.ViewHolder {
+public final class FooterViewHolder extends RecyclerView.ViewHolder {
 	View loading;
 	View tryAgain;
 
@@ -15,5 +15,13 @@ final class FooterViewHolder extends RecyclerView.ViewHolder {
 		if (loading == null || tryAgain == null) {
 			throw new IllegalStateException("Footer view doesn't contain View with id/loading or id/tryAgain");
 		}
+	}
+
+	public View getLoadingView() {
+		return loading;
+	}
+
+	public View getTryAgainView() {
+		return tryAgain;
 	}
 }
