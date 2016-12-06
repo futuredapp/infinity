@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 24
@@ -22,6 +23,11 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 final MOCKITO_VERSION = '1.10.19'
@@ -30,6 +36,7 @@ final JUNIT_VERSION = '4.12'
 final SUPPORT_LIBRARY_VERSION = '24.2.1'
 final RUNNER_VERSION = '0.5'
 final DEXMAKER_VERSION = '1.4'
+final ROBOLECTRIC_VERSION = '3.1.4'
 
 dependencies {
     compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
@@ -56,4 +63,15 @@ dependencies {
     androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
     androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"
     androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:$DEXMAKER_VERSION"
+
+    testCompile "junit:junit:$JUNIT_VERSION"
+    testCompile 'org.assertj:assertj-core:3.5.2'
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile "org.robolectric:robolectric:$ROBOLECTRIC_VERSION"
+    testCompile "org.robolectric:shadows-support-v4:$ROBOLECTRIC_VERSION"
+    testCompile "org.robolectric:shadows-multidex:$ROBOLECTRIC_VERSION"
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+    testCompile('com.github.Plastix.RxSchedulerRule:rx1:1.0.2') {
+        exclude group: 'io.reactivex', module: 'rxjava'
+    }
 }
