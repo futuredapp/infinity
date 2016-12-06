@@ -518,8 +518,9 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		offset += data.size();
 
 		if (part == InfinityConstant.FIRST_PAGE && data.size() == 0) { // no data
-			loadingStatus = InfinityConstant.IDLE;
+			setIdle();
 			onFirstEmpty(pullToRefresh);
+			setFinished();
 		} else { // we have some data
 			setIdle();
 			onLoad(part);
@@ -576,8 +577,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void setFinished() {
 		loadingStatus = InfinityConstant.FINISHED;
-		onFinished();
 		removeFooter();
+		onFinished();
 	}
 
 	private void tryAgain() {
