@@ -586,7 +586,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	private void tryAgain() {
-		requestNext();
+		requestNextPostponed(recyclerView);
 	}
 
 	public @LayoutRes int getFooterLayout() {
