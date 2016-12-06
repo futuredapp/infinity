@@ -482,7 +482,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	/**
-	 * Get all content items
+	 * Gets all content items
 	 *
 	 * @return list of current content items
 	 */
@@ -505,6 +505,15 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			notifyItemInserted(getHeaderCount() + pos);
 		}
 		offset += 1;
+	}
+
+	/**
+	 * Retrieves current status of item load
+	 *
+	 * @return one of the statuses: IDLE, LOADING, FINISHED
+	 */
+	public @InfinityConstant.Status int getCurrentLoadingStatus() {
+		return loadingStatus;
 	}
 
 	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
