@@ -555,6 +555,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void onLoad(@InfinityConstant.Part int part) {
 		if (part == InfinityConstant.FIRST_PAGE) {
+			recyclerView.scrollToPosition(0);
 			onFirstLoaded(pullToRefresh);
 		} else {
 			onNextLoaded();
