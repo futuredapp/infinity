@@ -355,7 +355,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		setLoading(InfinityConstant.FIRST_PAGE);
 		onPreLoad(InfinityConstant.FIRST_PAGE);
-		showFooter();
+		refreshFooter();
 		filler.resetCallbacks(getFirstPageCallback(), getNextPageCallback());
 		filler.onLoad(limit, offset, filler.getFirstPageCallback());
 	}
@@ -363,7 +363,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private void requestNext() {
 		setLoading(InfinityConstant.NEXT_PAGE);
 		onPreLoad(InfinityConstant.NEXT_PAGE);
-		showFooter();
+		refreshFooter();
 		filler.onLoad(limit, offset, filler.getNextPageCallback());
 	}
 
@@ -384,7 +384,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 					errorOccurred = true;
 					setIdle();
 					onFirstUnavailable(error, pullToRefresh);
-					showFooter();
+					refreshFooter();
 				}
 			}
 		};
@@ -403,7 +403,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 					errorOccurred = true;
 					setIdle();
 					onNextUnavailable(error);
-					showFooter();
+					refreshFooter();
 				}
 			}
 		};
@@ -512,7 +512,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		initialContent = false;
 		errorOccurred = false;
-		showFooter();
+		refreshFooter();
 		notifyItemRangeInserted(offset + getHeaderCount(), data.size());
 
 		offset += data.size();
@@ -533,17 +533,11 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
-	private void showFooter() {
-		if (!footerVisible) {
+	private void refreshFooter() {
+		if (!footerVisible) { // add footer
 			footerVisible = true;
 			notifyItemInserted(getItemCount());
-		} else {
-			refreshFooter();
-		}
-	}
-
-	private void refreshFooter() {
-		if (footerVisible) {
+		} else { // refresh content
 			notifyItemChanged(getItemCount() - 1);
 		}
 	}
