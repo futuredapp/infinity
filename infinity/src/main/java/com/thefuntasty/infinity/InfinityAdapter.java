@@ -23,7 +23,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private @InfinityConstant.Status int loadingStatus = InfinityConstant.IDLE;
 
 	private List<T> content = new ArrayList<>();
-	private InfinityFiller<T> filler;
+	private InfinityFillerImpl<T> filler;
 	private InfinityEventListener eventListener;
 
 	private int limit = 20;
@@ -468,7 +468,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 * @param filler filler from what data are obtained
 	 */
 	public void setFiller(@NonNull InfinityFiller<T> filler) {
-		this.filler = filler;
+		this.filler = new InfinityFillerImpl<>(filler);
 	}
 
 	/**
