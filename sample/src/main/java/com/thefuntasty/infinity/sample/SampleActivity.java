@@ -27,7 +27,7 @@ public class SampleActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
 
-		final InfinityAdapter<User, ?> adapter = new SampleUserAdapter();
+		final InfinityAdapter<Number, ?> adapter = new SampleUserAdapter();
 		refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override public void onRefresh() {
 				adapter.restart(true);
@@ -36,13 +36,13 @@ public class SampleActivity extends AppCompatActivity {
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
 
-		adapter.setLimit(10);
-		adapter.setFiller(new InfinityFiller<User>() {
-			@Override public void onLoad(final int limit, final int offset, final InfinityFiller.Callback<User> callback) {
+		adapter.setLimit(5);
+		adapter.setFiller(new InfinityFiller<Number>() {
+			@Override public void onLoad(final int limit, final int offset, final InfinityFiller.Callback<Number> callback) {
 				DataManager.get().getDataObservable(limit, offset)
-						.subscribe(new Action1<List<User>>() {
-							@Override public void call(List<User> users) {
-								callback.onData(users);
+						.subscribe(new Action1<List<Number>>() {
+							@Override public void call(List<Number> numbers) {
+								callback.onData(numbers);
 							}
 						}, new Action1<Throwable>() {
 							@Override public void call(Throwable throwable) {
