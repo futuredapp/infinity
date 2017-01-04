@@ -6,12 +6,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class InfinityConstant {
+	public static final int ERROR = -1;
 	public static final int IDLE = 0;
 	public static final int LOADING = 1;
 	public static final int FINISHED = 2;
 
 	@Retention(RetentionPolicy.SOURCE)
-	@IntDef({IDLE, LOADING, FINISHED})
+	@IntDef({ERROR, IDLE, LOADING, FINISHED})
 	public @interface Status {}
 
 	static final int FIRST_PAGE = 0;

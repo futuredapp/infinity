@@ -129,12 +129,12 @@ adapter.setEventListener(new InfinityEventListener() {
 View types are supported by default. All you need to do is to override `getContentItemViewType()` method of your adapter class. View type value returned by this method must be in range <0,49>.
 
 ```java
-public static final int LEFT = 0;
-public static final int RIGHT = 1;
+public static final int EVEN = 0;
+public static final int ODD = 1;
 
 @Override
 public int getContentItemViewType(int position) {
-	return position % 2 == 0 ? LEFT : RIGHT;
+	return position % 2 == 0 ? EVEN : ODD;
 }
 ```
 
@@ -143,11 +143,11 @@ public int getContentItemViewType(int position) {
 In scenario you want to add header (or headers) at the top of the recycler, implement particular methods in your adapter class.
 
 ```java
-public static final int HEADER_TYPE_FIRST = 50;
-public static final int HEADER_TYPE_SECOND = 51;
+public static final int HEADER_EVEN = 50;
+public static final int HEADER_ODD = 51;
 
 @Override public ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-	if (viewType == HEADER_TYPE_FIRST) {
+	if (viewType == HEADER_EVEN) {
 		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_1, parent, false);
 		return new ViewHolder(view);
 	} else {
@@ -166,9 +166,9 @@ public static final int HEADER_TYPE_SECOND = 51;
 
 @Override public int getHeaderItemViewType(int position) {
 	if (position == 0) {
-		return HEADER_TYPE_FIRST;
+		return HEADER_EVEN;
 	} else {
-		return HEADER_TYPE_SECOND;
+		return HEADER_ODD;
 	}
 }
 ```

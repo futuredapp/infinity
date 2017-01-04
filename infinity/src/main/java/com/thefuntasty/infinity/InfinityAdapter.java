@@ -1,5 +1,6 @@
 package com.thefuntasty.infinity;
 
+import android.os.Looper;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -30,7 +31,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private int offset = 0;
 	private int visibleThreshold = 5;
 
-	private boolean errorOccurred = false;
 	private boolean footerVisible = false;
 	private boolean pullToRefresh = false;
 	private boolean startCalled = false;
@@ -221,8 +221,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		View footer = LayoutInflater.from(parent.getContext()).inflate(getFooterLayout(), parent, false);
 		footer.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
-				if (errorOccurred && loadingStatus != InfinityConstant.LOADING) {
-					errorOccurred = false;
+				if (loadingStatus == InfinityConstant.ERROR) {
 					tryAgain();
 				}
 			}
@@ -239,12 +238,12 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	private void onBindFooterViewHolder(FooterViewHolder footerViewHolder) {
-		if (errorOccurred) {
+		if (loadingStatus == InfinityConstant.ERROR) {
 			footerViewHolder.loading.setVisibility(View.GONE);
-			footerViewHolder.tryAgain.setVisibility(View.VISIBLE);
+			footerViewHolder.retry.setVisibility(View.VISIBLE);
 		} else {
-			footerViewHolder.tryAgain.setVisibility(View.GONE);
 			footerViewHolder.loading.setVisibility(View.VISIBLE);
+			footerViewHolder.retry.setVisibility(View.GONE);
 		}
 		if (recyclerView != null && recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
 			StaggeredGridLayoutManager.LayoutParams layoutParams =
@@ -282,7 +281,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				staggeredGridLayoutManager.findFirstVisibleItemPositions(positions);
 				int firstVisibleItem = findMin(positions);
 
-				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+				if (!initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
 					requestNextPostponed(recyclerView);
 				}
@@ -310,7 +309,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				int visibleItemCount = recyclerView.getChildCount();
 				int totalItemCount = gridLayoutManager.getItemCount();
 
-				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+				if (!initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
 					requestNextPostponed(recyclerView);
 				}
@@ -328,7 +327,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				int visibleItemCount = recyclerView.getChildCount();
 				int totalItemCount = linearLayoutManager.getItemCount();
 
-				if (!errorOccurred && !initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+				if (!initialContent && loadingStatus == InfinityConstant.IDLE && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 					footerVisible = true;
 					requestNextPostponed(recyclerView);
 				}
@@ -337,13 +336,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		recyclerView.addOnScrollListener(onScrollListener);
 	}
 
-	private void requestNextPostponed(RecyclerView recyclerView) {
-		recyclerView.post(new Runnable() {
-			@Override public void run() {
-				requestNext();
-			}
-		});
-	}
+
 
 	@Override
 	public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
@@ -360,11 +353,14 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		filler.onLoad(limit, offset, filler.getFirstPageCallback());
 	}
 
-	private void requestNext() {
+	private void requestNextPostponed(RecyclerView recyclerView) {
 		setLoading(InfinityConstant.NEXT_PAGE);
-		onPreLoad(InfinityConstant.NEXT_PAGE);
-		refreshFooter();
-		filler.onLoad(limit, offset, filler.getNextPageCallback());
+		recyclerView.post(new Runnable() {
+			@Override public void run() {
+				onPreLoad(InfinityConstant.NEXT_PAGE);
+				filler.onLoad(limit, offset, filler.getNextPageCallback());
+			}
+		});
 	}
 
 	@NonNull private InfinityFiller.Callback<T> getFirstPageCallback() {
@@ -381,10 +377,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
-					errorOccurred = true;
-					setIdle();
+					setError();
 					onFirstUnavailable(error, pullToRefresh);
-					refreshFooter();
 				}
 			}
 		};
@@ -400,10 +394,8 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
-					errorOccurred = true;
-					setIdle();
+					setError();
 					onNextUnavailable(error);
-					refreshFooter();
 				}
 			}
 		};
@@ -510,28 +502,29 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	/**
 	 * Retrieves current status of item load
 	 *
-	 * @return one of the statuses: IDLE, LOADING, FINISHED
+	 * @return one of the statuses: ERROR, IDLE, LOADING, FINISHED
 	 */
 	public @InfinityConstant.Status int getCurrentLoadingStatus() {
 		return loadingStatus;
 	}
 
 	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
+		if (Looper.myLooper() != Looper.getMainLooper()) {
+			throw new InfinityException("Callback methods onData() & onError() must be called from UI Thread");
+		}
+
 		content.addAll(data);
 
 		initialContent = false;
-		errorOccurred = false;
-		refreshFooter();
+		setIdle();
 		notifyItemRangeInserted(offset + getHeaderCount(), data.size());
 
 		offset += data.size();
 
 		if (part == InfinityConstant.FIRST_PAGE && data.size() == 0) { // no data
-			setIdle();
 			onFirstEmpty(pullToRefresh);
 			setFinished();
 		} else { // we have some data
-			setIdle();
 			onLoad(part);
 
 			if (data.size() < limit) {
@@ -559,8 +552,19 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		}
 	}
 
+	private void setError() {
+		loadingStatus = InfinityConstant.ERROR;
+		refreshFooter();
+	}
+
 	private void setIdle() {
 		loadingStatus = InfinityConstant.IDLE;
+		refreshFooter();
+	}
+
+	private void setLoading(@InfinityConstant.Part int part) {
+		loadingStatus = InfinityConstant.LOADING;
+		refreshFooter();
 	}
 
 	private void onLoad(@InfinityConstant.Part int part) {
@@ -570,10 +574,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		} else {
 			onNextLoaded();
 		}
-	}
-
-	private void setLoading(@InfinityConstant.Part int part) {
-		loadingStatus = InfinityConstant.LOADING;
 	}
 
 	private void onPreLoad(@InfinityConstant.Part int part) {

@@ -10,20 +10,15 @@ import com.thefuntasty.infinity.test.App;
 import com.thefuntasty.infinity.test.User;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
 
 import java.util.List;
 
-import io.github.plastix.rxschedulerrule.RxSchedulerRule;
 import rx.Observable;
 import rx.functions.Action1;
 
 public abstract class BaseAdapterTest {
-
-	@Rule public RxSchedulerRule rxSchedulerRule = new RxSchedulerRule();
-
 	protected RecyclerView recyclerView;
 
 	@Before

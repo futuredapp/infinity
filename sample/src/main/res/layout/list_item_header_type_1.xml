@@ -7,5 +7,5 @@
 	android:textColor="@android:color/white"
 	android:gravity="center"
 	android:textSize="15sp"
-	android:background="@color/colorAccent"
+	android:background="#FF673AB7"
 	android:padding="10dp"/>
