@@ -9,7 +9,7 @@ import com.thefuntasty.infinity.InfinityEventListener;
 import com.thefuntasty.infinity.test.App;
 import com.thefuntasty.infinity.test.BuildConfig;
 import com.thefuntasty.infinity.test.User;
-import com.thefuntasty.infinity.test.adapter.BaseAdapterTest;
+import com.thefuntasty.infinity.test.adapter.BaseRxAdapterTest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.M, application = App.class)
-public class ExactlyOnePageAdapterTest extends BaseAdapterTest {
+public class ExactlyOnePageAdapterTest extends BaseRxAdapterTest {
 
 	@Mock InfinityEventListener mockEventListener;
 
