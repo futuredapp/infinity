@@ -68,7 +68,7 @@ Tiny library with ability to provide support for infinite paginated scrolling in
 
 ### Change error/loading layout at the bottom of the list
 
-Simply override method `getFooterLayout()` in your adapter and return XML layout resource what contains 2 views with id's `@+id/loading` and `@+id/try_again`.
+Simply override method `getFooterLayout()` in your adapter and return XML layout resource what contains 2 views with id's `@+id/loading` and `@+id/retry`.
 
 1. `footer_layout.xml`
 	```xml
@@ -84,7 +84,7 @@ Simply override method `getFooterLayout()` in your adapter and return XML layout
 		</LinearLayout>
 	
 		<LinearLayout
-			android:id="@+id/try_again"
+			android:id="@+id/retry"
 			android:layout_width="...">
 	
 			<!-- content -->
