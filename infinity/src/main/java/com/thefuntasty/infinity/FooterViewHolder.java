@@ -5,15 +5,15 @@ import android.view.View;
 
 public final class FooterViewHolder extends RecyclerView.ViewHolder {
 	View loading;
-	View tryAgain;
+	View retry;
 
 	FooterViewHolder(View v) {
 		super(v);
 		loading = v.findViewById(R.id.loading);
-		tryAgain = v.findViewById(R.id.try_again);
+		retry = v.findViewById(R.id.retry);
 
-		if (loading == null || tryAgain == null) {
-			throw new IllegalStateException("Footer view doesn't contain View with id/loading or id/tryAgain");
+		if (loading == null || retry == null) {
+			throw new IllegalStateException("Footer view doesn't contain View with id/loading or id/retry");
 		}
 	}
 
@@ -21,7 +21,7 @@ public final class FooterViewHolder extends RecyclerView.ViewHolder {
 		return loading;
 	}
 
-	public View getTryAgainView() {
-		return tryAgain;
+	public View getRetryView() {
+		return retry;
 	}
 }

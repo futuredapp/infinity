@@ -3,32 +3,11 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:animateLayoutChanges="true">
+	android:animateLayoutChanges="true"
+	android:orientation="vertical">
 
 	<LinearLayout
 		android:id="@+id/loading"
-		android:orientation="vertical"
-		android:layout_width="match_parent"
-		android:gravity="center"
-		android:layout_height="wrap_content">
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:background="@android:color/holo_blue_light"
-			android:orientation="vertical"
-			android:text="Loading"
-			android:padding="20dp"
-			android:textAllCaps="true"
-			android:textColor="@android:color/black"
-			android:textSize="20sp"/>
-
-	</LinearLayout>
-
-	<LinearLayout
-		android:id="@+id/try_again"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
@@ -36,15 +15,32 @@
 
 		<TextView
 			android:layout_width="match_parent"
-			android:background="@android:color/holo_blue_light"
 			android:layout_height="wrap_content"
+			android:background="#FF03A9F4"
 			android:gravity="center"
-			android:padding="20dp"
-			android:orientation="vertical"
-			android:text="Try again"
-			android:textAllCaps="true"
-			android:textColor="@android:color/black"
-			android:textSize="20sp"/>
+			android:padding="10dp"
+			android:text="Loading"
+			android:textColor="@android:color/white"
+			android:textSize="15sp"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/retry"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#FFF44336"
+			android:gravity="center"
+			android:padding="10dp"
+			android:text="Retry"
+			android:textColor="@android:color/white"
+			android:textSize="15sp"/>
 	</LinearLayout>
 
 </LinearLayout>
