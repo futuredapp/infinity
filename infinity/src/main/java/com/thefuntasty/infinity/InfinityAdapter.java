@@ -1,5 +1,6 @@
 package com.thefuntasty.infinity;
 
+import android.os.Looper;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -508,6 +509,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	private void addDataAndResolveState(@NonNull List<T> data, @InfinityConstant.Part int part) {
+		if (Looper.myLooper() != Looper.getMainLooper()) {
+			throw new InfinityException("Callback methods onData() & onError() must be called from UI Thread");
+		}
+
 		content.addAll(data);
 
 		initialContent = false;
