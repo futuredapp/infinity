@@ -1,6 +1,7 @@
 package com.thefuntasty.infinity.sample;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +27,7 @@ public class DataManager {
 	}
 
 	private List<Number> getData() {
-		final ArrayList<Number> data = new ArrayList<>(100);
+		final ArrayList<Number> data = new ArrayList<>(20);
 		data.add(new Number(0));
 		data.add(new Number(1));
 		data.add(new Number(2));
@@ -47,43 +48,19 @@ public class DataManager {
 		data.add(new Number(17));
 		data.add(new Number(18));
 		data.add(new Number(19));
-		data.add(new Number(20));
-		data.add(new Number(21));
-		data.add(new Number(22));
-		data.add(new Number(23));
-		data.add(new Number(24));
-		data.add(new Number(25));
-		data.add(new Number(26));
-		data.add(new Number(27));
-		data.add(new Number(28));
-		data.add(new Number(29));
-		data.add(new Number(30));
-		data.add(new Number(31));
-		data.add(new Number(32));
-		data.add(new Number(33));
-		data.add(new Number(34));
-		data.add(new Number(35));
-		data.add(new Number(36));
-		data.add(new Number(37));
-		data.add(new Number(38));
-		data.add(new Number(39));
-		data.add(new Number(40));
-		data.add(new Number(41));
-		data.add(new Number(42));
-		data.add(new Number(43));
-		data.add(new Number(44));
-		data.add(new Number(45));
-		data.add(new Number(46));
-		data.add(new Number(47));
-		data.add(new Number(48));
-		data.add(new Number(49));
 
 		return data;
 	}
 
 	public Observable<List<Number>> getDataObservable(final int limit, final int offset) {
-		Observable<Number> observable = Observable.from(getData());
+		List<Number> data = getData();
 
+		if (offset >= data.size()) {
+			return Observable.just(Collections.<Number>emptyList())
+					.delay(3, TimeUnit.SECONDS);
+		}
+
+		Observable<Number> observable = Observable.from(data);
 		final Random random = new Random();
 
 		return observable
