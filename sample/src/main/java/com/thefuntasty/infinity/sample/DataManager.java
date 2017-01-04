@@ -57,7 +57,9 @@ public class DataManager {
 
 		if (offset >= data.size()) {
 			return Observable.just(Collections.<Number>emptyList())
-					.delay(3, TimeUnit.SECONDS);
+					.delay(3, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribeOn(Schedulers.io());
 		}
 
 		Observable<Number> observable = Observable.from(data);
