@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.thefuntasty.infinity.InfinityAdapter;
 
-public class SampleUserAdapter extends InfinityAdapter<Number, SampleUserAdapter.ViewHolder> {
+public class SampleNumberAdapter extends InfinityAdapter<Number, SampleNumberAdapter.ViewHolder> {
 
 	private static final int EVEN = 0;
 	private static final int ODD = 1;
 
-	private static final int HEADER_EVEN = 100;
-	private static final int HEADER_ODD = 101;
+	private static final int HEADER_EVEN = 50;
+	private static final int HEADER_ODD = 51;
 
 	@Override
 	public ViewHolder onCreateContentViewHolder(ViewGroup parent, int viewType) {
@@ -59,7 +59,7 @@ public class SampleUserAdapter extends InfinityAdapter<Number, SampleUserAdapter
 	}
 
 	@Override
-	public void onBindContentViewHolder(SampleUserAdapter.ViewHolder holder, int position) {
+	public void onBindContentViewHolder(SampleNumberAdapter.ViewHolder holder, int position) {
 		((TextView) holder.itemView).setText(getContentItem(position).toString());
 	}
 

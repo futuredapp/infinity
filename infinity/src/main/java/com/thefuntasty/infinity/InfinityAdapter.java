@@ -241,10 +241,10 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	private void onBindFooterViewHolder(FooterViewHolder footerViewHolder) {
 		if (errorOccurred) {
 			footerViewHolder.loading.setVisibility(View.GONE);
-			footerViewHolder.tryAgain.setVisibility(View.VISIBLE);
+			footerViewHolder.retry.setVisibility(View.VISIBLE);
 		} else {
-			footerViewHolder.tryAgain.setVisibility(View.GONE);
 			footerViewHolder.loading.setVisibility(View.VISIBLE);
+			footerViewHolder.retry.setVisibility(View.GONE);
 		}
 		if (recyclerView != null && recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
 			StaggeredGridLayoutManager.LayoutParams layoutParams =

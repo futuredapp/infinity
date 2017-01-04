@@ -129,12 +129,12 @@ adapter.setEventListener(new InfinityEventListener() {
 View types are supported by default. All you need to do is to override `getContentItemViewType()` method of your adapter class. View type value returned by this method must be in range <0,49>.
 
 ```java
-public static final int LEFT = 0;
-public static final int RIGHT = 1;
+public static final int EVEN = 0;
+public static final int ODD = 1;
 
 @Override
 public int getContentItemViewType(int position) {
-	return position % 2 == 0 ? LEFT : RIGHT;
+	return position % 2 == 0 ? EVEN : ODD;
 }
 ```
 

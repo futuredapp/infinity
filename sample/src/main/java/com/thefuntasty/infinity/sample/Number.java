@@ -8,6 +8,6 @@ public class Number {
 	}
 
 	@Override public String toString() {
-		return "No. " + number;
+		return String.valueOf(number);
 	}
 }

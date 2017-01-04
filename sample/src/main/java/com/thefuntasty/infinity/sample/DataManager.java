@@ -77,62 +77,14 @@ public class DataManager {
 		data.add(new Number(47));
 		data.add(new Number(48));
 		data.add(new Number(49));
-		data.add(new Number(50));
-		data.add(new Number(51));
-		data.add(new Number(52));
-		data.add(new Number(53));
-		data.add(new Number(54));
-		data.add(new Number(55));
-		data.add(new Number(56));
-		data.add(new Number(57));
-		data.add(new Number(58));
-		data.add(new Number(59));
-		data.add(new Number(60));
-		data.add(new Number(61));
-		data.add(new Number(62));
-		data.add(new Number(63));
-		data.add(new Number(64));
-		data.add(new Number(65));
-		data.add(new Number(66));
-		data.add(new Number(67));
-		data.add(new Number(68));
-		data.add(new Number(69));
-		data.add(new Number(70));
-		data.add(new Number(71));
-		data.add(new Number(72));
-		data.add(new Number(73));
-		data.add(new Number(74));
-		data.add(new Number(75));
-		data.add(new Number(76));
-		data.add(new Number(77));
-		data.add(new Number(78));
-		data.add(new Number(79));
-		data.add(new Number(80));
-		data.add(new Number(81));
-		data.add(new Number(82));
-		data.add(new Number(83));
-		data.add(new Number(84));
-		data.add(new Number(85));
-		data.add(new Number(86));
-		data.add(new Number(87));
-		data.add(new Number(88));
-		data.add(new Number(89));
-		data.add(new Number(90));
-		data.add(new Number(91));
-		data.add(new Number(92));
-		data.add(new Number(93));
-		data.add(new Number(94));
-		data.add(new Number(95));
-		data.add(new Number(96));
-		data.add(new Number(97));
-		data.add(new Number(98));
-		data.add(new Number(99));
 
 		return data;
 	}
 
 	public Observable<List<Number>> getDataObservable(final int limit, final int offset) {
 		Observable<Number> observable = Observable.from(getData());
+
+		final Random random = new Random();
 
 		return observable
 				.skip(offset)
@@ -141,9 +93,8 @@ public class DataManager {
 				.delay(3, TimeUnit.SECONDS)
 				.map(new Func1<List<Number>, List<Number>>() {
 					@Override public List<Number> call(List<Number> numbers) {
-						Random random = new Random();
 						if (random.nextBoolean()) {
-							throw new RuntimeException("a");
+							throw new RuntimeException("Network error");
 						}
 						return numbers;
 					}

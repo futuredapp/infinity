@@ -27,7 +27,7 @@ public class SampleActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
 
-		final InfinityAdapter<Number, ?> adapter = new SampleUserAdapter();
+		final InfinityAdapter<Number, ?> adapter = new SampleNumberAdapter();
 		refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override public void onRefresh() {
 				adapter.restart(true);

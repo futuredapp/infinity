@@ -18,7 +18,6 @@
 			android:layout_height="wrap_content"
 			android:gravity="center"
 			android:background="@android:color/darker_gray"
-			android:orientation="vertical"
 			android:text="Loading"
 			android:padding="20dp"
 			android:textAllCaps="true"
@@ -28,7 +27,7 @@
 	</LinearLayout>
 
 	<LinearLayout
-		android:id="@+id/try_again"
+		android:id="@+id/retry"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
@@ -40,8 +39,7 @@
 			android:layout_height="wrap_content"
 			android:gravity="center"
 			android:padding="20dp"
-			android:orientation="vertical"
-			android:text="Try again"
+			android:text="Retry"
 			android:textAllCaps="true"
 			android:textColor="@android:color/black"
 			android:textSize="20sp"/>
