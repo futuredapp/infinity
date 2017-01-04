@@ -4,11 +4,11 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-24.0.3
-    - android-24
+    - build-tools-25.0.2
+    - android-25
     - extra-android-support
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-19
 
 branches:
   only:
@@ -33,7 +33,7 @@ install:
     - true
 
 script:
-  - TERM=dumb ./gradlew build -Dpre-dex=false test connectedCheck
+  - TERM=dumb ./gradlew build -Dpre-dex=false :test:test connectedCheck
 
 after_failure: 
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
