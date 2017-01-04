@@ -567,6 +567,12 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		refreshFooter();
 	}
 
+	private void setFinished() {
+		loadingStatus = InfinityConstant.FINISHED;
+		removeFooter();
+		onFinished();
+	}
+
 	private void onLoad(@InfinityConstant.Part int part) {
 		if (part == InfinityConstant.FIRST_PAGE) {
 			recyclerView.scrollToPosition(0);
@@ -582,12 +588,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		} else {
 			onPreLoadNext();
 		}
-	}
-
-	private void setFinished() {
-		loadingStatus = InfinityConstant.FINISHED;
-		removeFooter();
-		onFinished();
 	}
 
 	private void tryAgain() {
