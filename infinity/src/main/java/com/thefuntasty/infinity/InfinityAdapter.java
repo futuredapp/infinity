@@ -357,7 +357,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		recyclerView.post(new Runnable() {
 			@Override public void run() {
 				onPreLoad(InfinityConstant.NEXT_PAGE);
-				refreshFooter();
 				filler.onLoad(limit, offset, filler.getNextPageCallback());
 			}
 		});
@@ -379,7 +378,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				if (!interrupted) {
 					setError();
 					onFirstUnavailable(error, pullToRefresh);
-					refreshFooter();
 				}
 			}
 		};
@@ -397,7 +395,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 				if (!interrupted) {
 					setError();
 					onNextUnavailable(error);
-					refreshFooter();
 				}
 			}
 		};
@@ -515,7 +512,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		initialContent = false;
 		setIdle();
-		refreshFooter();
 		notifyItemRangeInserted(offset + getHeaderCount(), data.size());
 
 		offset += data.size();
@@ -553,10 +549,17 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void setError() {
 		loadingStatus = InfinityConstant.ERROR;
+		refreshFooter();
 	}
 
 	private void setIdle() {
 		loadingStatus = InfinityConstant.IDLE;
+		refreshFooter();
+	}
+
+	private void setLoading(@InfinityConstant.Part int part) {
+		loadingStatus = InfinityConstant.LOADING;
+		refreshFooter();
 	}
 
 	private void onLoad(@InfinityConstant.Part int part) {
@@ -566,10 +569,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		} else {
 			onNextLoaded();
 		}
-	}
-
-	private void setLoading(@InfinityConstant.Part int part) {
-		loadingStatus = InfinityConstant.LOADING;
 	}
 
 	private void onPreLoad(@InfinityConstant.Part int part) {
