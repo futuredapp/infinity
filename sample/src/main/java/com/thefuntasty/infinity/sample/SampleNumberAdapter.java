@@ -8,20 +8,20 @@ import android.widget.TextView;
 
 import com.thefuntasty.infinity.InfinityAdapter;
 
-public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.ViewHolder> {
+public class SampleNumberAdapter extends InfinityAdapter<Number, SampleNumberAdapter.ViewHolder> {
 
-	private static final int LEFT = 0;
-	private static final int RIGHT = 1;
+	private static final int EVEN = 0;
+	private static final int ODD = 1;
 
-	private static final int HEADER_PURPLE = 50;
-	private static final int HEADER_RED = 51;
+	private static final int HEADER_EVEN = 50;
+	private static final int HEADER_ODD = 51;
 
 	@Override
 	public ViewHolder onCreateContentViewHolder(ViewGroup parent, int viewType) {
-		if (viewType == LEFT) {
+		if (viewType == EVEN) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user_type_1, parent, false);
 			return new ViewHolder(view);
-		} else if (viewType == RIGHT) {
+		} else if (viewType == ODD) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_user_type_2, parent, false);
 			return new ViewHolder(view);
 		} else {
@@ -30,10 +30,10 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override public ViewHolder onCreateHeaderViewHolder(ViewGroup parent, int viewType) {
-		if (viewType == HEADER_PURPLE) {
+		if (viewType == HEADER_EVEN) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_1, parent, false);
 			return new ViewHolder(view);
-		} else if (viewType == HEADER_RED) {
+		} else if (viewType == HEADER_ODD) {
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_header_type_2, parent, false);
 			return new ViewHolder(view);
 		} else {
@@ -42,7 +42,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 	}
 
 	@Override public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-		((TextView) holder.itemView).setText("I'm header" + position);
+		((TextView) holder.itemView).setText("Header " + position);
 	}
 
 	@Override public int getHeaderCount() {
@@ -51,15 +51,15 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 
 	@Override public int getHeaderItemViewType(int position) {
 		if (position == 0) {
-			return HEADER_PURPLE;
+			return HEADER_EVEN;
 		} else {
-			return HEADER_RED;
+			return HEADER_ODD;
 		}
 
 	}
 
 	@Override
-	public void onBindContentViewHolder(SampleUserAdapter.ViewHolder holder, int position) {
+	public void onBindContentViewHolder(SampleNumberAdapter.ViewHolder holder, int position) {
 		((TextView) holder.itemView).setText(getContentItem(position).toString());
 	}
 
@@ -70,7 +70,7 @@ public class SampleUserAdapter extends InfinityAdapter<User, SampleUserAdapter.V
 
 	@Override
 	public int getContentItemViewType(int position) {
-		return position % 2 == 0 ? LEFT : RIGHT;
+		return position % 2 == 0 ? EVEN : ODD;
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder {
