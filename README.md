@@ -181,7 +181,7 @@ There are two limitations:
 
 ```groovy
 dependencies {
-	compile 'com.github.thefuntasty:infinity:{version}}'
+	compile 'com.github.thefuntasty:infinity:{version}'
 }
 ```
 
