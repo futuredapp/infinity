@@ -181,7 +181,7 @@ There are two limitations:
 
 ```groovy
 dependencies {
-	compile 'com.github.thefuntasty:infinity:{version}'
+	compile 'com.github.thefuntasty:infinity:1.0.0'
 }
 ```
 
@@ -189,7 +189,7 @@ dependencies {
 
 	MIT License
 
-	Copyright (c) 2016 FUNTASTY Digital s.r.o.
+	Copyright (c) 2017 FUNTASTY Digital s.r.o.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
