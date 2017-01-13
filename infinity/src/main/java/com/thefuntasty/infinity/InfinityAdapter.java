@@ -483,9 +483,9 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	}
 
 	/**
-	 * Add item to content at specific position. If restart is called, item is removed with rest of content.
+	 * Add item to content at specific position. If restart is called, item is removed with rest of the content.
 	 *
-	 * @param pos  position where item will be added. If position is bigger than content size, item will be added to last position.
+	 * @param pos  position where item will be added. If position is bigger than content size, item will be added to the end of the content.
 	 * @param item item which will be added to the content
 	 */
 	public void addItem(int pos, T item) {
@@ -497,6 +497,23 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			notifyItemInserted(getHeaderCount() + pos);
 		}
 		offset += 1;
+	}
+
+	/**
+	 * Add items to content at specific position. If restart is called, items are removed with rest of the content.
+	 *
+	 * @param pos   position where items will be added. If position is bigger than content size, items will be added to the end of the content.
+	 * @param items items what will be added to the content
+	 */
+	public void addItems(int pos, List<T> items) {
+		if (pos >= content.size()) {
+			content.addAll(items);
+			notifyItemInserted(getHeaderCount() + content.size() - 1);
+		} else {
+			content.addAll(pos, items);
+			notifyItemInserted(getHeaderCount() + pos);
+		}
+		offset += items.size();
 	}
 
 	/**
