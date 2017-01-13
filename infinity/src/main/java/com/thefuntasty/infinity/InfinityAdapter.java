@@ -336,8 +336,6 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		recyclerView.addOnScrollListener(onScrollListener);
 	}
 
-
-
 	@Override
 	public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
 		recyclerView.removeOnScrollListener(onScrollListener);
@@ -357,6 +355,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		setLoading(InfinityConstant.NEXT_PAGE);
 		recyclerView.post(new Runnable() {
 			@Override public void run() {
+				refreshFooter();
 				onPreLoad(InfinityConstant.NEXT_PAGE);
 				filler.onLoad(limit, offset, filler.getNextPageCallback());
 			}
@@ -378,6 +377,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
 					setError();
+					refreshFooter();
 					onFirstUnavailable(error, pullToRefresh);
 				}
 			}
@@ -395,6 +395,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 			@Override public void onError(Throwable error) {
 				if (!interrupted) {
 					setError();
+					refreshFooter();
 					onNextUnavailable(error);
 				}
 			}
@@ -534,6 +535,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 		initialContent = false;
 		setIdle();
+		refreshFooter();
 		notifyItemRangeInserted(offset + getHeaderCount(), data.size());
 
 		offset += data.size();
@@ -541,11 +543,13 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		if (part == InfinityConstant.FIRST_PAGE && data.size() == 0) { // no data
 			onFirstEmpty(pullToRefresh);
 			setFinished();
+			removeFooter();
 		} else { // we have some data
 			onLoad(part);
 
 			if (data.size() < limit) {
 				setFinished();
+				removeFooter();
 			} else {
 				// notify scroller about possibility loading next parts
 				onScrollListener.onScrolled(recyclerView, recyclerView.getScrollX(), recyclerView.getScrollY());
@@ -571,22 +575,18 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 
 	private void setError() {
 		loadingStatus = InfinityConstant.ERROR;
-		refreshFooter();
 	}
 
 	private void setIdle() {
 		loadingStatus = InfinityConstant.IDLE;
-		refreshFooter();
 	}
 
 	private void setLoading(@InfinityConstant.Part int part) {
 		loadingStatus = InfinityConstant.LOADING;
-		refreshFooter();
 	}
 
 	private void setFinished() {
 		loadingStatus = InfinityConstant.FINISHED;
-		removeFooter();
 		onFinished();
 	}
 
