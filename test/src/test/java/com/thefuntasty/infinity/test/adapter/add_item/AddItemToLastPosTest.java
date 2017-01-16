@@ -33,9 +33,7 @@ public class AddItemToLastPosTest extends BaseRxAdapterTest {
 
 	@Test
 	public void addToLast() {
-		int position = 10;
-
-		adapter.addItem(position, user2);
+		adapter.addItem(10, user2);
 		invalidateRecyclerView();
 
 		TextView zeroPos = ((TextView) recyclerView.findViewHolderForAdapterPosition(0).itemView);

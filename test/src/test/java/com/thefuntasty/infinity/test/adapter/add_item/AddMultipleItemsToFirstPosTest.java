@@ -34,13 +34,11 @@ public class AddMultipleItemsToFirstPosTest extends BaseRxAdapterTest {
 
 	@Test
 	public void addToFirst() {
-		int position = 0;
-
 		ArrayList<User> users = new ArrayList<>();
 		users.add(user1);
 		users.add(user2);
 
-		adapter.addItems(position, users);
+		adapter.addItems(0, users);
 		invalidateRecyclerView();
 
 		TextView zeroPos = ((TextView) recyclerView.findViewHolderForAdapterPosition(0).itemView);
@@ -52,7 +50,7 @@ public class AddMultipleItemsToFirstPosTest extends BaseRxAdapterTest {
 		assertThat(firstPos.getText()).isEqualTo(user2.toString());
 		assertThat(thirdPos.getText()).isEqualTo(user3.toString());
 
-		assertThat(((InfinityAdapter) recyclerView.getAdapter()).getCurrentLoadingStatus()).isEqualTo(InfinityConstant.FINISHED);
+		assertThat(adapter.getCurrentLoadingStatus()).isEqualTo(InfinityConstant.FINISHED);
 	}
 
 	@Override public Observable<List<User>> getDataObservable(int limit, int offset) {
