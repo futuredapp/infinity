@@ -52,7 +52,7 @@ public class AddMultipleItemsToFirstPosTest extends BaseRxAdapterTest {
 		assertThat(firstPos.getText()).isEqualTo(user2.toString());
 		assertThat(thirdPos.getText()).isEqualTo(user3.toString());
 
-		assertThat(((InfinityAdapter) recyclerView.getAdapter()).getCurrentLoadingStatus()).isEqualTo(InfinityConstant.FINISHED);
+		assertThat(adapter.getCurrentLoadingStatus()).isEqualTo(InfinityConstant.FINISHED);
 	}
 
 	@Override public Observable<List<User>> getDataObservable(int limit, int offset) {
