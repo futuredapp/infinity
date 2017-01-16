@@ -26,8 +26,7 @@ public abstract class BaseAdapterTest {
 		MockitoAnnotations.initMocks(this);
 
 		recyclerView = new RecyclerView(RuntimeEnvironment.application);
-		recyclerView.measure(0, 0);
-		recyclerView.layout(0, 0, 100, 1000);
+		invalidateRecyclerView();
 
 		final InfinityAdapter<User, ?> adapter = getAdapter();
 		recyclerView.setLayoutManager(getLayoutManager());
@@ -50,6 +49,11 @@ public abstract class BaseAdapterTest {
 		});
 		adapter.setEventListener(getEventListener(null));
 		adapter.start();
+	}
+
+	protected void invalidateRecyclerView() {
+		recyclerView.measure(0, 0);
+		recyclerView.layout(0, 0, 100, 1000);
 	}
 
 	public int getLimit() {
