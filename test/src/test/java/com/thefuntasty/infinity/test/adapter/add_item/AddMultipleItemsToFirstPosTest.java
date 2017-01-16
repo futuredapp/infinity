@@ -34,13 +34,11 @@ public class AddMultipleItemsToFirstPosTest extends BaseRxAdapterTest {
 
 	@Test
 	public void addToFirst() {
-		int position = 0;
-
 		ArrayList<User> users = new ArrayList<>();
 		users.add(user1);
 		users.add(user2);
 
-		adapter.addItems(position, users);
+		adapter.addItems(0, users);
 		invalidateRecyclerView();
 
 		TextView zeroPos = ((TextView) recyclerView.findViewHolderForAdapterPosition(0).itemView);

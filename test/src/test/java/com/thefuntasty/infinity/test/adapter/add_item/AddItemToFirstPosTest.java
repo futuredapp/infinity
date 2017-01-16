@@ -33,9 +33,7 @@ public class AddItemToFirstPosTest extends BaseRxAdapterTest {
 
 	@Test
 	public void addToFirst() {
-		int position = 0;
-
-		adapter.addItem(position, user1);
+		adapter.addItem(0, user1);
 		invalidateRecyclerView();
 
 		TextView zeroPos = ((TextView) recyclerView.findViewHolderForAdapterPosition(0).itemView);
