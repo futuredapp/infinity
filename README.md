@@ -6,6 +6,7 @@ Tiny library with ability to provide support for infinite paginated scrolling in
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-infinity-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4469)
 <a href="https://travis-ci.org/thefuntasty/infinity"><img src="https://travis-ci.org/thefuntasty/infinity.svg?branch=master"></a>
 <p align="center"><img src="https://github.com/thefuntasty/infinity/blob/master/images/infinity.gif?raw=true" height="426" width="240"></p>
+
 # Usage
 
 ## Minimal implementation
@@ -33,7 +34,7 @@ Tiny library with ability to provide support for infinite paginated scrolling in
 			}
 		}
 	}
-```
+	```
 
 2. Create instance of `InfinityFiller<Model>` class. It serves as a paginated data provider to your adapter.
 
