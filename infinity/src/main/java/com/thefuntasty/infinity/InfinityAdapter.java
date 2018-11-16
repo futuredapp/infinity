@@ -217,6 +217,78 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 		return 0;
 	}
 
+	/**
+	 * Provides content ViewHolder before it gets recycled
+	 *
+	 * @param holder content ViewHolder
+	 */
+	protected void onContentViewRecycled(VH holder) { }
+
+	/**
+	 * Provides footer ViewHolder before it gets recycled
+	 *
+	 * @param holder footer ViewHolder
+	 */
+	protected void onFooterViewRecycled(FooterViewHolder holder) { }
+
+	/**
+	 * Provides footer ViewHolder when it gets attached to window
+	 *
+	 * @param holder footer ViewHolder
+	 */
+	protected void onFooterViewAttachedToWindow(FooterViewHolder holder) { }
+
+	/**
+	 * Provides content ViewHolder when it gets attached to window
+	 *
+	 * @param holder content ViewHolder
+	 */
+	protected void onContentViewAttachedToWindow(VH holder) { }
+
+	/**
+	 * Provides footer ViewHolder when it gets detached from window
+	 *
+	 * @param holder footer ViewHolder
+	 */
+	protected void onFooterViewDetachedFromWindow(FooterViewHolder holder) { }
+
+	/**
+	 * Provides content ViewHolder when it gets detached from window
+	 *
+	 * @param holder contentViewHolder
+	 */
+	protected void onContentViewDetachedFromWindow(VH holder) { }
+
+	@Override
+	public void onViewRecycled(VH holder) {
+		if (holder instanceof FooterViewHolder) {
+			onFooterViewRecycled((FooterViewHolder) holder);
+		} else {
+			onContentViewRecycled(holder);
+		}
+		super.onViewRecycled(holder);
+	}
+
+	@Override
+	public void onViewAttachedToWindow(VH holder) {
+		super.onViewAttachedToWindow(holder);
+		if (holder instanceof FooterViewHolder) {
+			onFooterViewAttachedToWindow((FooterViewHolder) holder);
+		} else {
+			onContentViewAttachedToWindow(holder);
+		}
+	}
+
+	@Override
+	public void onViewDetachedFromWindow(VH holder) {
+		super.onViewDetachedFromWindow(holder);
+		if (holder instanceof FooterViewHolder) {
+			onFooterViewDetachedFromWindow((FooterViewHolder) holder);
+		} else {
+			onContentViewDetachedFromWindow(holder);
+		}
+	}
+
 	private RecyclerView.ViewHolder onCreateFooterViewHolder(ViewGroup parent) {
 		View footer = LayoutInflater.from(parent.getContext()).inflate(getFooterLayout(), parent, false);
 		footer.setOnClickListener(new View.OnClickListener() {

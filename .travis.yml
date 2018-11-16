@@ -8,7 +8,6 @@ android:
     - android-25
     - extra-android-support
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-19
 
 branches:
   only:
@@ -22,19 +21,12 @@ env:
 
 before_script:
   - chmod +x gradlew
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
-  - emulator -avd test -no-audio -no-window -gpu off -no-boot-anim &
-  - android-wait-for-emulator
-  - adb shell settings put global window_animation_scale 0 &
-  - adb shell settings put global transition_animation_scale 0 &
-  - adb shell settings put global animator_duration_scale 0 &
-  - adb shell input keyevent 82 &
-  
+
 install:
     - true
 
 script:
-  - TERM=dumb ./gradlew build -Dpre-dex=false :test:test connectedCheck
+  - TERM=dumb ./gradlew build -Dpre-dex=false
 
 after_failure: 
   - cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml
