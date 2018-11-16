@@ -229,7 +229,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	 *
 	 * @param holder footer ViewHolder
 	 */
-	protected void onFooterViewRecycler(FooterViewHolder holder) { }
+	protected void onFooterViewRecycled(FooterViewHolder holder) { }
 
 	/**
 	 * Provides footer ViewHolder when it gets attached to window
@@ -262,7 +262,7 @@ public abstract class InfinityAdapter<T, VH extends RecyclerView.ViewHolder> ext
 	@Override
 	public void onViewRecycled(VH holder) {
 		if (holder instanceof FooterViewHolder) {
-			onFooterViewRecycler((FooterViewHolder) holder);
+			onFooterViewRecycled((FooterViewHolder) holder);
 		} else {
 			onContentViewRecycled(holder);
 		}
