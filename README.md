@@ -1,4 +1,4 @@
-⚠️ This project is no longer maintained. Prefer to use more robust solutions like Paging library from Android Jetpack. ⚠️
+⚠️ This project is no longer maintained. Prefer to use more robust solutions like Paging library from Android Jetpack.
 
 # infinity
 
