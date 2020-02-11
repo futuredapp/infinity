@@ -1,3 +1,5 @@
+⚠️ This project is no longer maintained. Prefer to use more robust solutions like Paging library from Android Jetpack. ⚠️
+
 # infinity
 
 Tiny library with ability to provide support for infinite paginated scrolling in `RecyclerView`. It is able to show loading & try again layout at the bottom of the list.
